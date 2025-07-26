@@ -1,0 +1,472 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis Interaktif: Isu Ijazah Jokowi dan Motif Politiknya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        html {
+            scroll-behavior: smooth;
+        }
+        .highlight {
+            transition: all 0.3s ease-in-out;
+            background-color: #fef3c7;
+            transform: scale(1.02);
+            box-shadow: 0 4px 14px 0 rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #d97706; /* amber-600 */
+            border-bottom-color: #d97706;
+        }
+    </style>
+</head>
+<body class="bg-[#fdfbf7] text-slate-800">
+
+    <header id="header" class="bg-[#fdfbf7]/80 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-200">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-slate-700">Analisis Isu Ijazah</h1>
+            <div class="hidden md:flex space-x-6 text-slate-600">
+                <a href="#analisis" class="nav-link font-medium border-b-2 border-transparent pb-1">Analisis Inti</a>
+                <a href="#linimasa" class="nav-link font-medium border-b-2 border-transparent pb-1">Linimasa</a>
+                <a href="#pihak" class="nav-link font-medium border-b-2 border-transparent pb-1">Para Pihak</a>
+                <a href="#konteks" class="nav-link font-medium border-b-2 border-transparent pb-1">Konteks Politik</a>
+                <a href="#kesimpulan" class="nav-link font-medium border-b-2 border-transparent pb-1">Kesimpulan</a>
+            </div>
+            <button id="menu-btn" class="md:hidden text-slate-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white">
+            <a href="#analisis" class="block py-2 px-4 text-sm text-slate-600 hover:bg-amber-50">Analisis Inti</a>
+            <a href="#linimasa" class="block py-2 px-4 text-sm text-slate-600 hover:bg-amber-50">Linimasa</a>
+            <a href="#pihak" class="block py-2 px-4 text-sm text-slate-600 hover:bg-amber-50">Para Pihak</a>
+            <a href="#konteks" class="block py-2 px-4 text-sm text-slate-600 hover:bg-amber-50">Konteks Politik</a>
+            <a href="#kesimpulan" class="block py-2 px-4 text-sm text-slate-600 hover:bg-amber-50">Kesimpulan</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="analisis" class="pt-16 -mt-16 mb-20">
+            <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Tuduhan vs. Fakta</h2>
+            <p class="text-center text-slate-500 max-w-3xl mx-auto mb-10">
+                Bagian ini membedah klaim utama yang dilontarkan dan membandingkannya langsung dengan bukti dan fakta yang telah terverifikasi. Klik pada salah satu poin tuduhan untuk melihat bantahan faktualnya secara langsung.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-2xl font-bold mb-4 text-red-700">Tuduhan</h3>
+                    <div class="space-y-4">
+                        <div id="claim-1" class="p-4 rounded-md border border-red-200 bg-red-50 cursor-pointer hover:bg-red-100 transition">
+                            <h4 class="font-bold">Ijazah & Skripsi Palsu</h4>
+                            <p class="text-sm text-slate-600">Klaim utama menyebut ijazah dan skripsi Jokowi "99,9% Palsu" tanpa bukti konkret dari dokumen asli.</p>
+                        </div>
+                        <div id="claim-2" class="p-4 rounded-md border border-red-200 bg-red-50 cursor-pointer hover:bg-red-100 transition">
+                            <h4 class="font-bold">Anomali Dosen Pembimbing</h4>
+                            <p class="text-sm text-slate-600">Menyoroti pengakuan Ir. Kasmudjo yang bukan pembimbing skripsi sebagai bukti adanya kejanggalan.</p>
+                        </div>
+                        <div id="claim-3" class="p-4 rounded-md border border-red-200 bg-red-50 cursor-pointer hover:bg-red-100 transition">
+                            <h4 class="font-bold">Analisis Forensik Digital</h4>
+                            <p class="text-sm text-slate-600">Menggunakan hasil Error Level Analysis (ELA) pada foto ijazah dari internet sebagai bukti pemalsuan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-2xl font-bold mb-4 text-green-700">Fakta Bantahan</h3>
+                    <div class="space-y-4">
+                        <div id="fact-1" class="p-4 rounded-md border border-green-200 bg-green-50">
+                            <h4 class="font-bold">Verifikasi UGM & Putusan Hukum</h4>
+                            <p class="text-sm text-slate-600">UGM secara resmi telah memverifikasi keaslian ijazah Jokowi (lulus 5 Nov 1985). Lebih jauh, penyebar pertama isu ini telah divonis 6 tahun penjara karena menyebar berita bohong.</p>
+                        </div>
+                        <div id="fact-2" class="p-4 rounded-md border border-green-200 bg-green-50">
+                            <h4 class="font-bold">Klarifikasi Peran Dosen</h4>
+                            <p class="text-sm text-slate-600">Ir. Kasmudjo adalah Dosen Pembimbing Akademik (PA), bukan Pembimbing Skripsi. Pembimbing Skripsi adalah (Alm.) Prof. Dr. Ir. Achmad Sumitro. Ini adalah dua peran berbeda yang sengaja dikaburkan.</p>
+                        </div>
+                        <div id="fact-3" class="p-4 rounded-md border border-green-200 bg-green-50">
+                            <h4 class="font-bold">Metode ELA Tidak Valid</h4>
+                            <p class="text-sm text-slate-600">Ahli forensik digital menyebut ELA sangat subjektif, tidak dapat diandalkan, dan tidak bisa digunakan untuk memvalidasi keaslian dokumen fisik hanya dari analisis foto di internet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="linimasa" class="pt-16 -mt-16 mb-20">
+            <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Linimasa Perkembangan Isu</h2>
+            <p class="text-center text-slate-500 max-w-3xl mx-auto mb-10">
+                Isu ini bukanlah hal baru. Ia telah berevolusi selama bertahun-tahun, melibatkan berbagai aktor dan peristiwa. Garis waktu ini menunjukkan momen-momen kunci dalam sejarah narasi ijazah palsu.
+            </p>
+            <div class="relative max-w-2xl mx-auto">
+                <div class="absolute left-1/2 w-0.5 h-full bg-slate-300 transform -translate-x-1/2"></div>
+                <div id="timeline-container" class="space-y-12">
+                    </div>
+            </div>
+        </section>
+
+        <section id="pihak" class="pt-16 -mt-16 mb-20">
+            <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Para Pihak Terkait</h2>
+             <p class="text-center text-slate-500 max-w-3xl mx-auto mb-10">
+                Memahami aktor-aktor kunci dan rekam jejak mereka penting untuk melihat gambaran yang lebih besar. Bagian ini mengulas profil institusi dan individu yang terlibat dalam pusaran isu ini.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 space-y-4">
+                    <h3 class="text-2xl font-bold text-slate-700">Institusi & Subjek</h3>
+                    <div class="p-4 rounded-md border border-slate-200">
+                        <h4 class="font-semibold text-lg">Presiden Joko Widodo</h4>
+                        <p class="text-sm text-slate-600">Alumnus Fakultas Kehutanan UGM, lulus tahun 1985. Secara konsisten menanggapi isu dengan santai, namun juga menyatakan isu ini telah menjadi fitnah.</p>
+                    </div>
+                     <div class="p-4 rounded-md border border-slate-200">
+                        <h4 class="font-semibold text-lg">Universitas Gadjah Mada (UGM)</h4>
+                        <p class="text-sm text-slate-600">Sebagai almamater, UGM telah memberikan klarifikasi resmi berkali-kali, menegaskan keaslian ijazah dan status alumni Jokowi berdasarkan data akademik yang valid.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-2xl font-bold text-slate-700">Sang Penuduh: Roy Suryo</h3>
+                    <p class="text-sm text-slate-600 mb-4">Mantan Menpora dan politisi yang melabeli diri sebagai "pakar telematika". Rekam jejaknya menunjukkan pola dalam melontarkan klaim sensasional. Jelajahi beberapa kontroversinya di bawah ini.</p>
+                    <div class="relative p-4 rounded-lg border border-slate-200 bg-slate-50 min-h-[120px]">
+                        <div id="controversy-content">
+                            </div>
+                        <div class="absolute bottom-4 left-4 flex space-x-2" id="controversy-dots">
+                             </div>
+                        <button id="prev-controversy" class="absolute top-1/2 left-2 transform -translate-y-1/2 text-slate-400 hover:text-slate-700">&#10094;</button>
+                        <button id="next-controversy" class="absolute top-1/2 right-2 transform -translate-y-1/2 text-slate-400 hover:text-slate-700">&#10095;</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="konteks" class="pt-16 -mt-16 mb-20">
+            <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Konteks & Motif Politik</h2>
+            <p class="text-center text-slate-500 max-w-3xl mx-auto mb-10">
+                Tindakan ini bukan tanpa tujuan. Di balik sensasi, terdapat strategi politik yang dapat dianalisis. Grafik ini memvisualisasikan bobot relatif dari berbagai motif politik yang mendorong narasi ini. Klik pada bar untuk menyorot penjelasannya.
+            </p>
+            <div class="grid md:grid-cols-5 gap-8 items-center">
+                <div class="md:col-span-3">
+                    <div class="chart-container">
+                        <canvas id="motivasiChart"></canvas>
+                    </div>
+                </div>
+                <div class="md:col-span-2 space-y-4" id="motif-explanations">
+                    </div>
+            </div>
+        </section>
+        
+        <section id="kesimpulan" class="pt-16 -mt-16 text-center">
+            <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Kesimpulan Akhir</h2>
+             <p class="text-center text-slate-500 max-w-3xl mx-auto mb-10">
+                Setelah menimbang seluruh bukti, fakta, dan konteks, kita dapat menarik dua kesimpulan utama yang sangat jelas mengenai isu ini.
+            </p>
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-slate-200">
+                    <h3 class="text-xl font-bold mb-3">Probabilitas Ijazah Palsu</h3>
+                    <p class="text-sm text-slate-600 mb-4">Berdasarkan verifikasi UGM, putusan pengadilan, dan lemahnya bukti penuduh, probabilitasnya secara objektif sangat rendah.</p>
+                    <div class="w-full bg-slate-200 rounded-full h-4">
+                        <div id="probability-bar" class="bg-gradient-to-r from-amber-500 to-amber-600 h-4 rounded-full" style="width: 1%;"></div>
+                    </div>
+                    <p class="text-right font-bold text-amber-600 text-lg mt-2">~0%</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-slate-200">
+                    <h3 class="text-xl font-bold mb-3">Motif Roy Suryo</h3>
+                    <p class="text-sm text-slate-600">Tindakannya bukan pencarian kebenaran, melainkan manuver politik yang didasari kombinasi dari:
+                    <ul class="list-disc list-inside text-left text-sm text-slate-600 mt-2 space-y-1">
+                        <li>Kebutuhan akan atensi & relevansi politik.</li>
+                        <li>Strategi delegitimasi terhadap lawan politik.</li>
+                        <li>Eksploitasi iklim media *post-truth*.</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Data
+    const timelineData = [
+        { year: '2019-2021', title: 'Isu Mulai Beredar', description: 'Narasi ijazah palsu mulai muncul secara sporadis di media sosial, seringkali bersamaan dengan isu politik lainnya.', side: 'left' },
+        { year: 'Okt 2022', title: 'Gugatan Bambang Tri Mulyono', description: 'Bambang Tri Mulyono, penulis buku "Jokowi Undercover", secara resmi menggugat Jokowi ke pengadilan atas tuduhan ijazah palsu.', side: 'right' },
+        { year: 'Okt 2022', title: 'Klarifikasi Pertama UGM', description: 'Menanggapi gugatan, Rektor UGM Prof. Ova Emilia mengadakan konferensi pers, menegaskan keaslian ijazah Jokowi.', side: 'left' },
+        { year: 'Apr 2023', title: 'Vonis Pengadilan', description: 'Bambang Tri Mulyono divonis 6 tahun penjara karena terbukti menyebarkan berita bohong yang menimbulkan keonaran.', side: 'right' },
+        { year: '2024-2025', title: 'Isu Diangkat Kembali oleh Roy Suryo', description: 'Roy Suryo secara aktif mengangkat kembali isu ini, dengan fokus pada analisis digital dan anomali versi dirinya.', side: 'left' },
+    ];
+    
+    const controversyData = [
+        { title: "Kasus Meme Stupa", description: "Divonis dalam kasus penyebaran meme stupa Candi Borobudur yang diedit menyerupai wajah Presiden Jokowi." },
+        { title: "Aset Negara 'Dewa Panci'", description: "Menjadi sorotan publik karena dituduh belum mengembalikan ribuan aset negara setelah menjabat sebagai Menpora." },
+        { title: "Salah Lirik Indonesia Raya", description: "Menjadi viral karena salah menyanyikan lirik lagu kebangsaan Indonesia Raya saat menjadi host acara." },
+    ];
+
+    const motifData = {
+        labels: ['Politik Atensi (Relevansi)', 'Delegitimasi Politik', 'Fenomena Post-Truth'],
+        values: [90, 80, 75],
+        explanations: [
+            { id: 'motif-1', title: 'Politik Atensi', description: 'Kebutuhan untuk tetap relevan di panggung politik dengan cara menciptakan kontroversi yang menarik perhatian media dan publik.' },
+            { id: 'motif-2', title: 'Delegitimasi Politik', description: 'Upaya sistematis untuk merusak citra dan kepercayaan publik terhadap lawan politik dengan menyerang hal-hal personal dan mendasar.' },
+            { id: 'motif-3', title: 'Fenomena Post-Truth', description: 'Memanfaatkan iklim di mana sentimen dan keyakinan pribadi lebih berpengaruh daripada fakta objektif untuk memobilisasi basis pendukung.' },
+        ]
+    };
+
+    // --- Interactivity Logic ---
+
+    // 1. Mobile Menu
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        mobileMenu.classList.add('hidden');
+      }
+    });
+
+    // 2. Analisis Inti: Claim-Fact Highlighting
+    const claims = {
+        'claim-1': 'fact-1',
+        'claim-2': 'fact-2',
+        'claim-3': 'fact-3',
+    };
+    let lastHighlightedFact = null;
+    Object.keys(claims).forEach(claimId => {
+        const claimEl = document.getElementById(claimId);
+        claimEl.addEventListener('click', () => {
+            const factId = claims[claimId];
+            const factEl = document.getElementById(factId);
+            
+            if (lastHighlightedFact && lastHighlightedFact !== factEl) {
+                lastHighlightedFact.classList.remove('highlight');
+            }
+            
+            factEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            factEl.classList.add('highlight');
+            lastHighlightedFact = factEl;
+            
+            setTimeout(() => {
+                factEl.classList.remove('highlight');
+            }, 2500);
+        });
+    });
+
+    // 3. Render Linimasa
+    const timelineContainer = document.getElementById('timeline-container');
+    timelineData.forEach(item => {
+        const itemEl = document.createElement('div');
+        const content = `
+            <div class="bg-white p-4 rounded-lg shadow-md border border-slate-200 w-full max-w-sm">
+                <p class="font-bold text-amber-600 text-sm mb-1">${item.year}</p>
+                <h4 class="font-semibold text-lg mb-1">${item.title}</h4>
+                <p class="text-sm text-slate-600">${item.description}</p>
+            </div>
+        `;
+        if (item.side === 'left') {
+            itemEl.className = 'flex justify-start';
+            itemEl.innerHTML = `<div class="w-1/2 pr-8">${content}</div><div class="w-1/2"></div>`;
+        } else {
+            itemEl.className = 'flex justify-end';
+            itemEl.innerHTML = `<div class="w-1/2"></div><div class="w-1/2 pl-8">${content}</div>`;
+        }
+        
+        // Simplified for mobile
+        const mobileItemEl = document.createElement('div');
+        mobileItemEl.className = 'md:hidden mb-8';
+        mobileItemEl.innerHTML = content;
+        
+        // Responsive handling in JS
+        const desktopItemEl = document.createElement('div');
+        desktopItemEl.className = `hidden md:flex ${item.side === 'left' ? 'justify-start' : 'justify-end'} relative`;
+        desktopItemEl.innerHTML = `
+            <div class="absolute w-4 h-4 bg-amber-500 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-4 border-white"></div>
+            <div class="w-1/2 ${item.side === 'left' ? 'pr-8 text-right' : 'pl-8 text-left'}">
+                <div class="bg-white p-4 rounded-lg shadow-md border border-slate-200">
+                     <p class="font-bold text-amber-600 text-sm mb-1">${item.year}</p>
+                     <h4 class="font-semibold text-lg mb-1">${item.title}</h4>
+                     <p class="text-sm text-slate-600">${item.description}</p>
+                </div>
+            </div>
+        `;
+        timelineContainer.appendChild(desktopItemEl);
+        timelineContainer.appendChild(mobileItemEl);
+
+    });
+
+    // 4. Render & Control Kontroversi Slider
+    let currentControversy = 0;
+    const controversyContentEl = document.getElementById('controversy-content');
+    const controversyDotsEl = document.getElementById('controversy-dots');
+    const prevBtn = document.getElementById('prev-controversy');
+    const nextBtn = document.getElementById('next-controversy');
+    
+    function renderControversy(index) {
+        const item = controversyData[index];
+        controversyContentEl.innerHTML = `
+            <h4 class="font-semibold text-md mb-1">${item.title}</h4>
+            <p class="text-sm text-slate-600">${item.description}</p>`;
+        
+        // Update dots
+        Array.from(controversyDotsEl.children).forEach((dot, i) => {
+            dot.classList.toggle('bg-slate-600', i === index);
+            dot.classList.toggle('bg-slate-300', i !== index);
+        });
+    }
+
+    controversyData.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'w-2 h-2 rounded-full transition';
+        dot.addEventListener('click', () => {
+            currentControversy = i;
+            renderControversy(currentControversy);
+        });
+        controversyDotsEl.appendChild(dot);
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentControversy = (currentControversy - 1 + controversyData.length) % controversyData.length;
+        renderControversy(currentControversy);
+    });
+    nextBtn.addEventListener('click', () => {
+        currentControversy = (currentControversy + 1) % controversyData.length;
+        renderControversy(currentControversy);
+    });
+    renderControversy(0); // Initial render
+
+
+    // 5. Render Konteks Politik & Chart
+    const explanationsContainer = document.getElementById('motif-explanations');
+    motifData.explanations.forEach(exp => {
+        const expEl = document.createElement('div');
+        expEl.id = exp.id;
+        expEl.className = 'p-4 rounded-md border border-slate-200 bg-slate-50 transition duration-300';
+        expEl.innerHTML = `
+            <h4 class="font-bold text-slate-700">${exp.title}</h4>
+            <p class="text-sm text-slate-600">${exp.description}</p>`;
+        explanationsContainer.appendChild(expEl);
+    });
+
+    const ctx = document.getElementById('motivasiChart').getContext('2d');
+    const motivasiChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: motifData.labels,
+            datasets: [{
+                label: 'Bobot Motif',
+                data: motifData.values,
+                backgroundColor: 'rgba(217, 119, 6, 0.7)',
+                borderColor: 'rgba(217, 119, 6, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                     callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.x !== null) {
+                                label += context.parsed.x + '%';
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                },
+                y: {
+                    ticks: {
+                         autoSkip: false,
+                         callback: function(value, index, values) {
+                            const label = this.getLabelForValue(value);
+                            if (label.length > 16) {
+                                return label.match(/.{1,16}/g);
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            onClick: (e, elements) => {
+                if (elements.length > 0) {
+                    const index = elements[0].index;
+                    const expId = motifData.explanations[index].id;
+                    const expEl = document.getElementById(expId);
+                    
+                    // Remove highlight from others
+                    document.querySelectorAll('#motif-explanations > div').forEach(el => el.classList.remove('highlight'));
+                    
+                    // Add highlight to clicked
+                    expEl.classList.add('highlight');
+                    setTimeout(() => expEl.classList.remove('highlight'), 2500);
+                }
+            }
+        }
+    });
+
+    // 6. Active Nav Link on Scroll
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+});
+</script>
+
+</body>
+</html>
+```
